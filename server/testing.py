@@ -3,7 +3,7 @@ from MLFV_Constraints import MLFVConstraits
 
 class Testing(object):        
 
-    constr = MLFVConstraits("timeit,numpy,sklearn.ensemble,sklearn.metrics",1000,2,10)  
+    constr = MLFVConstraits({ "imports": "timeit,numpy,sklearn.ensemble,sklearn.metrics", "cpu": 1000, "mem": 2, "net": 10 })
 
     def __init__(self, pars):
         dataset, classifier = pars

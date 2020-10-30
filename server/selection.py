@@ -2,7 +2,7 @@ from MLFV_Constraints import MLFVConstraits
 
 
 class Selection(object):
-    constr = MLFVConstraits("numpy,timeit",1000,1,10)
+    constr = MLFVConstraits({ "imports": "numpy,timeit", "cpu": 1000, "mem": 1, "net": 10 })
     
     def __init__(self,par): 
         dataset, inputs, class_name = par

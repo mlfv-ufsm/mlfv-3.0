@@ -1,13 +1,13 @@
-import subprocess
 import sys
+import subprocess
 
 def parse_dependencies(dependencies_str):
-  parsedDependencies = dependencies_str.replace('"', '')
-  parsedDependencies = parsedDependencies.split(',')
-  return parsedDependencies
+  return dependencies_str.replace('"', '').split(',')
 
 def install(dependencies):
-  print(parse_dependencies(dependencies))
-  # for dependency in parse_dependencies(dependencies):
-  #   print (dependency)
-    # subprocess.check_call([sys.executable, "-m", "pip", "install", dependency])
+  for dependency in parse_dependencies(dependencies):
+    try:
+      __import__(dependency)
+    except ImportError:
+      subprocess.call('pip install ' + dependency, shell=True)
+      __import__(dependency)

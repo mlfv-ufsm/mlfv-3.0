@@ -1,8 +1,8 @@
 from MLFV_Constraints import MLFVConstraits
 
-class Training(object):        
-    constr = MLFVConstraits("timeit,numpy,sklearn.ensemble",1000,2,10)
-        
+class Training(object):
+    constr = MLFVConstraits({ "imports": "timeit,numpy,sklearn.ensemble", "cpu": 1000, "mem": 2, "net": 10 })
+
     def __init__(self, pars):
         dataset, classifier, cla_opts = pars
         self.dataset = dataset        

@@ -5,7 +5,7 @@ import multiprocessing
 import numpy as np
 import pandas as pd
 
-MLFV_SERVER_HOST="172.17.0.4"
+MLFV_SERVER_HOST="127.0.0.1"
 MLFV_SERVER_PORT=15088
 
 def get_chain(ds):

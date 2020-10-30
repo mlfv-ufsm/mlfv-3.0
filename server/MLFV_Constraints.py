@@ -5,8 +5,11 @@ class MLFVConstraits:
     mem=0
     net=0
 
-    def __init__(self, imports, cpu, mem, net):
-        self.imports = imports
-        self.cpu = cpu
-        self.mem = mem
-        self.net = net
+    def __init__(self, dict):
+        self.imports = self.check_key(dict, 'imports', '')
+        self.cpu = self.check_key(dict, 'cpu')
+        self.mem = self.check_key(dict, 'mem')
+        self.net = self.check_key(dict, 'net', 100)
+
+    def check_key(self, dict, key, default = 0):
+        return dict[key] if dict.has_key(key) else default

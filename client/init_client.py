@@ -29,11 +29,19 @@ def signal_handler(sig, frame):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 7:
-        print("Usage: python "+sys.argv[0]+" <server> <port> <libraries_to_be_shared> <cpu_speed> <memory_capacity> <network_speed>")
-        print("    eg.: python "+sys.argv[0]+" localhost 15089 \"os,numpy,sys,timeit,pandas,sklearn.ensemble,sklearn.preprocessing,sklearn.metrics\" 3000 8 100")
+    if len(sys.argv) != 8:
+        print("Usage: python "+sys.argv[0]+" <server> <port> <dependencies> <libraries_to_be_shared> <memory_capacity> <cpu_count> <network_speed>")
+        print("    eg.: python "+sys.argv[0]+" localhost 15089 \"numpy,pandas,sklearn\" \"os,sys,timeit,numpy,pandas,sklearn.ensemble,sklearn.preprocessing,sklearn.metrics\" 256m 2 100")
         # we opted for allowing these parameters manually for allowing the user to define how much processing capacity will be offered (and also to ease testing) 
         exit()
+
+    dependencies = sys.argv[3]
+    libs = sys.argv[4]
+    cpu = sys.argv[5]
+    mem = sys.argv[6]
+    net = sys.argv[7]
+
+    install(dependencies)
 
     signal.signal(signal.SIGINT, signal_handler)
     client_port = 18811
@@ -49,13 +57,6 @@ if __name__ == "__main__":
         exit()
 
     client_ip = socket.gethostbyname(socket.getfqdn()) 
-
-    libs = sys.argv[3]
-    cpu = sys.argv[4]
-    mem = sys.argv[5]
-    net = sys.argv[6]
-
-    # install(libs)
 
     info = [client_ip, client_port, libs, cpu, mem, net]
     print("Subscribed to "+sys.argv[1]+" on port "+str(sys.argv[2]))

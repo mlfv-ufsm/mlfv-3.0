@@ -1,8 +1,9 @@
 FROM ubuntu:18.04
-COPY init_client.py /home
+COPY ./ /home
 WORKDIR /home
 RUN apt-get update
 RUN apt-get install -y python-pip
+RUN pip install rpyc
 EXPOSE 18810
 EXPOSE 18811
 EXPOSE 18812
