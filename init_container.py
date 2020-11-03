@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     # print 'docker run -ti {} mlfv/client python init_client.py {}'.format(' '.join(['--memory=' + mem, '--cpus=' + cpu]), ' '.join(sys.argv))
 
-    subprocess.call('docker run -ti {} mlfv/client python init_client.py {}'.format(' '.join(['--memory=' + mem, '--cpus=' + cpu]), ' '.join(sys.argv)), shell=True)
+    subprocess.call('docker run -ti {} mlfv/client/gpu python init_client.py {}'.format(' '.join(['--memory=' + mem, '--cpus=' + cpu]), ' '.join(sys.argv)), shell=True)
   except Exception as e:
     print e
     exit()

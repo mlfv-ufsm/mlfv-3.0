@@ -1,7 +1,12 @@
 from MLFV_Constraints import MLFVConstraits
 
 class Training(object):
-    constr = MLFVConstraits({ "imports": "timeit,numpy,sklearn.ensemble", "cpu": 1000, "mem": 2, "net": 10 })
+    constr = MLFVConstraits({
+        "imports": "timeit,numpy,sklearn.ensemble",
+        "cpu": 1000,
+        "mem": 2,
+        "net": 10
+    })
 
     def __init__(self, pars):
         dataset, classifier, cla_opts = pars

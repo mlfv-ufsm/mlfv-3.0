@@ -6,7 +6,14 @@ def insert_reg(db, r):
     if (len(r) < 6):
         print("Bad insertion")
         return False
-    db[r['ip'], r['port']] = {'libs':r['libs'], 'cpu':r['cpu'], 'mem':r['mem'], 'net':r['net'], 'runs':0}
+    db[r['ip'], r['port']] = {
+        'libs': r['libs'],
+        'cpu': r['cpu'],
+        'mem': r['mem'],
+        'net': r['net'],
+        'gpu': r['gpu'],
+        'runs': 0
+    }
 
 
 def create_db():
@@ -23,8 +30,14 @@ def remove_reg(db, r):
 def decrease_runs(db, h, p):
     runs = db[h, p]['runs'] - 1
     r =  db[h, p]
-    db[h, p]={'libs':r['libs'], 'cpu':r['cpu'], 'mem':r['mem'], 'net':r['net'], 'runs':runs} 
-
+    db[h, p]={
+        'libs': r['libs'],
+        'cpu': r['cpu'],
+        'mem': r['mem'],
+        'net': r['net'],
+        'gpu': r['gpu'],
+        'runs': runs
+    } 
 
 
 def get_less_busy(db, hl):
@@ -36,7 +49,14 @@ def get_less_busy(db, hl):
             new_host = (h[0], h[1])
             less_runs = rec['runs']
     less_runs+=1 # update counter
-    db[new_host]={'libs':r['libs'], 'cpu':r['cpu'], 'mem':r['mem'], 'net':r['net'], 'runs':less_runs} 
+    db[new_host]={
+        'libs': r['libs'],
+        'cpu': r['cpu'],
+        'mem': r['mem'],
+        'net': r['net'],
+        'gpu': r['gpu'],
+        'runs':less_runs
+    } 
     return new_host
 
 

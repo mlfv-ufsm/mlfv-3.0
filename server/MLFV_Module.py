@@ -23,10 +23,18 @@ class ReceiveChain(rpyc.Service):
 
 class ReceiveClient(rpyc.Service):
     def exposed_subscribe(self, info):
-        insert_reg(db, {'ip':info[0], 'port':info[1], 'libs':info[2], 'cpu':info[3], 'mem':info[4], 'net':info[5]})
+        insert_reg(db, {
+            'ip': info[0],
+            'port': info[1],
+            'libs': info[2],
+            'cpu': info[3],
+            'mem': info[4],
+            'net': info[5],
+            'gpu': info[6]
+        })
         print("Host " + str(info[0]) + ":" + str(info[1]) + " subscribed")
     def exposed_unsubscribe(self, info):
-        remove_reg(db, {'ip':info[0], 'port':info[1]})
+        remove_reg(db, {'ip': info[0], 'port': info[1]})
         print("Host " + str(info[0]) + ":" + str(info[1]) + " unsubscribed")
 
 

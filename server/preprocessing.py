@@ -2,7 +2,12 @@ from MLFV_Constraints import MLFVConstraits
 
 
 class Preprocessing(object):
-    constr = MLFVConstraits({ "imports": "timeit,numpy,sklearn.preprocessing", "cpu": 1000, "mem": 2, "net": 10 })
+    constr = MLFVConstraits({
+        "imports": "timeit,numpy,sklearn.preprocessing",
+        "cpu": 1000,
+        "mem": 2,
+        "net": 10
+    })
 
     def __init__(self, par):
         dataset, scaler = par
