@@ -2,8 +2,11 @@ import rpyc
 import pickle
 import zlib as zl
 import base64 as b64
+import torch
+import torchvision
 from MLFV_Hosts import get_host
 from MLFV_DB import decrease_runs
+from chain import Chain
 
 
 def send_function(con, obj):
@@ -13,19 +16,28 @@ def send_function(con, obj):
 
 
 def exec_chain_function(c, p, ret, obj, pp, db):
-    exec("import " + obj.split('.')[0])  # import the object
-    exec('cc=' + obj + '(' + pp + ')')  # create the object with given parameters
+    print 'exec chain function params\nc: {}\np: {}\nret: {}\nobj: {}\npp: {}\ndb: {}\n'.format(c, p, ret, obj, pp, db)
+    print 'executed command: > {}'.format('cc=Chain({},{},{},{})'.format(str(c), p[c]['constraints'], p[c]['fn'], p[c]['params']))
+    
+    # import the object
+    # exec("import " + obj.split('.')[0])
+    # create the object with given parameters
+    
+    cc = Chain("'{}'".format(c), p[c]['constraints'], p[c]['fn'], p[c]['params'])
 
     h = get_host(cc, db)
 
     if h != None:
-        con = rpyc.classic.connect(h[0], int(h[1])) # connect to the host
-        r=send_function(con, cc) # send the function to be executed there
+        # connect to the host
+        con = rpyc.classic.connect(h[0], int(h[1]))
+        # send the function to be executed there
+        r = send_function(con, cc)
 
         if ret == "cla":
-            p[ret]=b64.b64encode(zl.compress(pickle.dumps(r), zl.Z_BEST_COMPRESSION)) # we need to compress the classifier
+            # we need to compress the classifier
+            p[ret] = b64.b64encode(zl.compress(pickle.dumps(r), zl.Z_BEST_COMPRESSION))
         else: 
-            p[ret]=r
+            p[ret] = r
 
         decrease_runs(db, h[0], h[1])
  

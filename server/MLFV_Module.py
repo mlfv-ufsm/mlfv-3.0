@@ -7,8 +7,8 @@ from rpyc.utils.server import ThreadedServer as Server
 
 
 db = None
-port_chain=15088
-port_cli=15089
+port_chain = 15088
+port_cli = 15089
 
 
 class ReceiveChain(rpyc.Service):

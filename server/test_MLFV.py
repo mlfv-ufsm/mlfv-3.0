@@ -5,8 +5,8 @@ import multiprocessing
 import numpy as np
 import pandas as pd
 
-MLFV_SERVER_HOST="172.17.0.2"
-MLFV_SERVER_PORT=15088
+MLFV_SERVER_HOST = "127.0.0.1"
+MLFV_SERVER_PORT = 15088
 
 def get_chain(ds):
     p = {}
@@ -21,7 +21,7 @@ def get_chain(ds):
     p['class_name'] = 11 #identifies the columns with the labels
 
     #preprocessing parameters
-    p['scaler']='Standard'
+    p['scaler'] = 'Standard'
 
     #generating the functions 
     s0 = "cla = training.Training(ds_train,classifier,cla_opts)"
@@ -30,7 +30,8 @@ def get_chain(ds):
     s3 = "pred = testing.Testing(preproc,cla)"
 
     #composing and returning the chain
-    c=([s0,(s1,s2)],s3)
+    c = ([s0,(s1,s2)],s3)
+
     return c, p
 
 

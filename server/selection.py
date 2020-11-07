@@ -9,7 +9,7 @@ class Selection(object):
         "net": 10
     })
     
-    def __init__(self,par): 
+    def __init__(self, par): 
         dataset, inputs, class_name = par
         self.dataset = dataset
         self.inputs = inputs
@@ -20,7 +20,7 @@ class Selection(object):
         print(s.name)
         for i in s.constr.imports.split(','):
             try:
-                exec("import "+i)
+                exec("import " + i)
             except Exception as e:
                 print(e)
                 return None
