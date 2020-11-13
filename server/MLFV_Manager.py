@@ -16,8 +16,8 @@ def send_function(con, obj):
 
 
 def exec_chain_function(c, p, ret, obj, pp, db):
-    print 'exec chain function params\nc: {}\np: {}\nret: {}\nobj: {}\npp: {}\ndb: {}\n'.format(c, p, ret, obj, pp, db)
-    print 'executed command: > {}'.format('cc=Chain({},{},{},{})'.format(str(c), p[c]['constraints'], p[c]['fn'], p[c]['params']))
+    # print 'exec chain function params\nc: {}\np: {}\nret: {}\nobj: {}\npp: {}\ndb: {}\n'.format(c, p, ret, obj, pp, db)
+    # print 'executed command: > {}'.format('cc=Chain({},{},{},{})'.format(str(c), p[c]['constraints'], p[c]['fn'], p[c]['params']))
     
     # import the object
     # exec("import " + obj.split('.')[0])
@@ -33,14 +33,15 @@ def exec_chain_function(c, p, ret, obj, pp, db):
         # send the function to be executed there
         r = send_function(con, cc)
 
-        if ret == "cla":
+        if ret.find('set') != -1:
             # we need to compress the classifier
-            p[ret] = b64.b64encode(zl.compress(pickle.dumps(r), zl.Z_BEST_COMPRESSION))
-        else: 
+            # p[ret] = b64.b64encode(zl.compress(pickle.dumps(r), zl.Z_BEST_COMPRESSION))
+            p[ret] = str(r.__dict__)
+        else:
             p[ret] = r
 
         decrease_runs(db, h[0], h[1])
- 
+
         return r
     else:
         return None

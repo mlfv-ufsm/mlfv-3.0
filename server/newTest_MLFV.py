@@ -42,9 +42,9 @@ def get_chain():
     'mem': 30000000,
     'net': 10,
   }
-  p['trainloader']['fn'] = 'torch.utils.data.DataLoader(trainset,batch_size,shuffle,num_workers)'
+  p['trainloader']['fn'] = 'torch.utils.data.DataLoader(dataset,batch_size,shuffle,num_workers)'
   p['trainloader']['params'] = {
-    'trainset': 'trainset',
+    'dataset': { 'type': 'key', 'target': "p['testset']" },
     'batch_size': 4,
     'shuffle': True,
     'num_workers': 2
@@ -70,9 +70,9 @@ def get_chain():
     'mem': 30000000,
     'net': 10,
   }
-  p['testloader']['fn'] = 'torch.utils.data.DataLoader(testset,batch_size,shuffle,num_workers)'
+  p['testloader']['fn'] = 'torch.utils.data.DataLoader(dataset,batch_size,shuffle,num_workers)'
   p['testloader']['params'] = {
-    'trainset': 'trainset',
+    'dataset': { 'type': 'key', 'target': "p['testset']" },
     'batch_size': 4,
     'shuffle': False,
     'num_workers': 2
@@ -88,7 +88,7 @@ def get_chain():
   # s6 = ("print(' '.join('%5s' % classes[labels[j]] for j in range(4)))")
 
   #composing and returning the chain
-  c = (s0, s1, s2, s3)
+  c = ([s0, s2],[s1, s3])
 
   print 'Sending chain:\n\ts0: {}\n\ts1: {}\n\ts2: {}\n\ts3: {}\n'.format(s0, s1, s2, s3)
 

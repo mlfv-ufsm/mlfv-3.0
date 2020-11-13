@@ -5,7 +5,7 @@ from MLFV_Manager import exec_chain_function
 def parse_chain(c, p, db):
     p = multiprocessing.Manager().dict(p) #transform p in a multiprocessing dictionary
 
-    print '\t>> p: {}\n'.format(p)
+    # print '\t>> p: {}\n'.format(p)
 
     if isinstance(c, tuple):
         return parse_seq(c, p, db)
@@ -54,18 +54,22 @@ def parse_chain_obj(c, p):
     par = par.split(')')[0]
     pp = append_dic_par(par, c) if c in p.keys() else append_dic_par(par)
 
-    print 'parse chain obj params:\nc: {}\nobj: {}\npar: {}\npp: {}\n'.format(c, obj, par, pp)
+    # print 'parse chain obj params:\nc: {}\nobj: {}\npar: {}\npp: {}\n'.format(c, obj, par, pp)
 
     return c, obj, pp
+
 
 def append_dic_par(pars, key = None):
     # parse the parameters to a list
     pp = pars.split(',')
     ret = ''
-    for i in pp:
+    for par in pp:
         if key != None:
-            ret += "{} = p['{}']['params']['{}'],".format(i, key, i)
+            if par == 'dataset':
+                ret += "{} = p['{}'],".format(par, key.replace('loader', 'set'))
+            else:
+                ret += "{} = p['{}']['params']['{}'],".format(par, key, par)
         else:
-            ret += "p['{}'],".format(i)
+            ret += "p['{}'],".format(par)
     ret = ret[:len(ret)-1]
     return ret

@@ -19,14 +19,21 @@ class Chain(object):
     # start timer
     start = timeit.default_timer()
     
-    fn_params = ','.join(['{}={}'.format(key, eval(chain.params[key]) if key == 'transform' else chain.params[key]) for key in chain.params.keys()])
+    fn_params = ['{}={}'.format(key, eval(chain.params[key]) if key == 'transform' else chain.params[key]) for key in chain.params.keys()]
+
+    # declaring params in local scope
+    for param in fn_params:
+      exec param
+      # replacing param name with 'name=value'
+      chain.fn = chain.fn.replace(param.split('=')[0], param)
 
     print '*********************Executing Chain*************************\n'
-    print '[FUNCTION] {}({})'.format(chain.fn.split('(')[0], fn_params)
+    print '[FUNCTION] {}'.format(chain.fn.split('(')[0])
+    print '[PARAMS]'
+    for param in fn_params:
+      print '\t- {}'.format(param)
 
-    chain_ret = eval('{}({})'.format(chain.fn, fn_params))
-
-    print chain_ret
+    chain_ret = eval(chain.fn, locals())
 
     # end timer
     end = timeit.default_timer()
