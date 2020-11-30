@@ -4,8 +4,8 @@ from MLFV_Constraints import MLFVConstraits
 class Selection(object):
     constr = MLFVConstraits({
         "imports": "numpy,timeit",
-        "cpu": 1000,
-        "mem": 1,
+        "cpu": 2,
+        "mem": 20000,
         "net": 10
     })
     

@@ -5,8 +5,8 @@ class Testing(object):
 
     constr = MLFVConstraits({
         "imports": "timeit,numpy,sklearn.ensemble,sklearn.metrics",
-        "cpu": 1000,
-        "mem": 2,
+        "cpu": 2,
+        "mem": 20000,
         "net": 10
     })
 
