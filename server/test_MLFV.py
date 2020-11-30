@@ -21,7 +21,7 @@ def get_chain(ds):
     p['class_name'] = 11 #identifies the columns with the labels
 
     #preprocessing parameters
-    p['scaler']='Standard'
+    p['scaler'] = 'Standard'
 
     #generating the functions 
     s0 = "cla = training.Training(ds_train,classifier,cla_opts)"
@@ -30,7 +30,8 @@ def get_chain(ds):
     s3 = "pred = testing.Testing(preproc,cla)"
 
     #composing and returning the chain
-    c=([s0,(s1,s2)],s3)
+    c = ([s0,(s1,s2)],s3)
+
     return c, p
 
 
