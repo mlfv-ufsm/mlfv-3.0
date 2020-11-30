@@ -55,7 +55,7 @@ def get_less_busy(db, hl):
         'mem': r['mem'],
         'net': r['net'],
         'gpu': r['gpu'],
-        'runs':less_runs
+        'runs': less_runs
     } 
     return new_host
 
