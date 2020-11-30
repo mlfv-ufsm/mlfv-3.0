@@ -37,8 +37,8 @@ if __name__ == "__main__":
 
     dependencies = sys.argv[3]
     libs = sys.argv[4]
-    cpu = sys.argv[5]
-    mem = sys.argv[6]
+    mem = sys.argv[5]
+    cpu = sys.argv[6]
     net = sys.argv[7]
     gpu = sys.argv[8] if len(sys.argv) > 8 else 0
 
