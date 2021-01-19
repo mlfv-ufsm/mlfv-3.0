@@ -8,7 +8,7 @@ import pandas as pd
 MLFV_SERVER_HOST="127.0.0.1"
 MLFV_SERVER_PORT=15088
 
-def get_chain(ds):
+def get_chain():
     p = {}
 
     p['optimizer'] = 'adam'
@@ -38,15 +38,15 @@ def send_chain(c,p):
 
 
 #executes a single chain
-def single(ds):
-    c,p = get_chain(ds)
+def single():
+    c,p = get_chain()
     x = send_chain(c,p)
 
 
 #perfoms multiple executions in parallel
-def multiple(ds,num_par):
+def multiple(num_par):
     jobs = []
-    c,p = get_chain(ds)
+    c,p = get_chain()
     for i in range(num_par):
         print("Sending "+str(i))
         proc = multiprocessing.Process(target=send_chain, args=(c, p))
@@ -59,12 +59,8 @@ def multiple(ds,num_par):
 
 
 if __name__ == "__main__":
-    if (len(sys.argv) == 1 or len(sys.argv) > 3):
-        print("For executing a single chain, use: "+sys.argv[0]+"<filename>")
-        print("For executing multiple chains in parallel, use: "+sys.argv[0]+"<filename> <num_par>")
-        print("  where\n    <filename> = csv file with to be classified\n    <num_par> = number of executions in parallel")
-    elif len(sys.argv) == 2:
-        single(sys.argv[1])
+    if len(sys.argv) == 1:
+        single()
     else:
-        multiple(sys.argv[1],int(sys.argv[2]))
+        multiple(int(sys.argv[1]))
 
