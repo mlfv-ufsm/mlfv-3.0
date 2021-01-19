@@ -5,33 +5,22 @@ import multiprocessing
 import numpy as np
 import pandas as pd
 
-MLFV_SERVER_HOST="172.17.0.2"
+MLFV_SERVER_HOST="127.0.0.1"
 MLFV_SERVER_PORT=15088
 
 def get_chain(ds):
     p = {}
-    #training parameters
-    p['ds_train'] = np.asarray(pd.read_csv("./treino.csv"))
-    p['classifier'] = 'RF'
-    p['cla_opts'] = 20
 
-    #selection parameters
-    p['dataset'] = np.asarray(pd.read_csv(ds).dropna()) 
-    p['columns'] = np.array([1, 2, 3, 6]) #'qT','fS','u2','u0'
-    p['class_name'] = 11 #identifies the columns with the labels
-
-    #preprocessing parameters
-    p['scaler']='Standard'
+    p['optimizer'] = 'adam'
+    p['loss'] = 'sparse_categorical_crossentropy'
+    p['metrics'] = ['accuracy']
 
     #generating the functions 
-    s0 = "cla = training.Training(ds_train,classifier,cla_opts)"
-    s1 = "selected = selection.Selection(dataset, columns, class_name)"
-    s2 = "preproc = preprocessing.Preprocessing(selected, scaler)"
-    s3 = "pred = testing.Testing(preproc,cla)"
+    s0 = "cla = training.Training(optimizer, loss, metrics)"
+    s3 = "pred = testing.Testing(cla)"
 
     #composing and returning the chain
-    c=([s0,(s1,s2)],s3)
-    return c, p
+    return (s0, s3), p
 
 
 #connects to the MLFV Module and sends the chain (c) with their parameters (p)

@@ -2,18 +2,15 @@ from MLFV_Constraints import MLFVConstraits
 
 
 class Testing(object):        
-
     constr = MLFVConstraits({
-        "imports": "timeit,numpy,sklearn.ensemble,sklearn.metrics",
+        "imports": "timeit,numpy,tensorflow",
         "cpu": 1000,
         "mem": 2,
         "net": 10
     })
 
     def __init__(self, pars):
-        dataset, classifier = pars
-        self.dataset = dataset        
-        self.classifier = classifier
+        self.classifier = pars[0]
         self.name = 'Testing'
     
     def run(s):
@@ -29,22 +26,21 @@ class Testing(object):
         start = timeit.default_timer()        
         print(s.name)
 
-        df = numpy.array(s.dataset) 
+
+        mnist = tensorflow.keras.datasets.mnist
+
+        (x_train, y_train), (x_test, y_test) = mnist.load_data()
+
         import cPickle as pickle, zlib as zl, base64 as b64
 
         c = pickle.loads(zl.decompress(b64.b64decode(s.classifier)))
 
-        my_X = df[:, 1:]  # features
-        my_Y = df[:, 0]  # actual labels
-
-        y_pred = c.predict(my_X) #predicting
-
-        precision,recall,fscore,support = sklearn.metrics.precision_recall_fscore_support(my_Y,y_pred)
+        print c
 
         #end timer
         end = timeit.default_timer()
         print("[Testing time]="+str(end-start))
-        print(precision,recall,fscore,support)
+        # print(precision,recall,fscore,support)
         return ([precision,recall,fscore,support])
     
 

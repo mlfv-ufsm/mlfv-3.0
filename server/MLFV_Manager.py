@@ -14,18 +14,24 @@ def send_function(con, obj):
 
 def exec_chain_function(c, p, ret, obj, pp, db):
     exec("import " + obj.split('.')[0])  # import the object
+    print('obj -----> ', obj, pp, c, p)
     exec('cc=' + obj + '(' + pp + ')')  # create the object with given parameters
 
     h = get_host(cc, db)
 
     if h != None:
         con = rpyc.classic.connect(h[0], int(h[1])) # connect to the host
-        r=send_function(con, cc) # send the function to be executed there
+        r = send_function(con, cc) # send the function to be executed there
+
+        print('response ---> ', r)
 
         if ret == "cla":
-            p[ret]=b64.b64encode(zl.compress(pickle.dumps(r), zl.Z_BEST_COMPRESSION)) # we need to compress the classifier
+            # we need to compress the classifier
+            p[ret] = b64.b64encode(
+                zl.compress(pickle.dumps(r), zl.Z_BEST_COMPRESSION)
+            ) 
         else: 
-            p[ret]=r
+            p[ret] = r
 
         decrease_runs(db, h[0], h[1])
  
