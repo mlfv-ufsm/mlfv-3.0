@@ -23,7 +23,7 @@ def exec_chain_function(c, p, ret, obj, pp, db):
         con = rpyc.classic.connect(h[0], int(h[1])) # connect to the host
         r = send_function(con, cc) # send the function to be executed there
 
-        print('response ---> ', r)
+        # print('response ---> ', r)
 
         if ret == "cla":
             # we need to compress the classifier

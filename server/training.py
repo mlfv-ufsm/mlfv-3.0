@@ -9,10 +9,12 @@ class Training(object):
     })
 
     def __init__(self, pars):
-        optimizer, loss, metrics = pars
+        model_json, optimizer, loss, metrics, prep_data = pars
+        self.model_json = model_json
         self.optimizer = optimizer
         self.loss = loss
         self.metrics = metrics
+        self.prep_data = prep_data
         self.name = 'Training'
     
     def run(s):
@@ -27,29 +29,18 @@ class Training(object):
         start = timeit.default_timer()
         print(s.name)
 
-        mnist = tensorflow.keras.datasets.mnist
+        (x_train, y_train), _ = s.prep_data
 
-        (x_train, y_train), (x_test, y_test) = mnist.load_data()
-        x_train, x_test = x_train / 255.0, x_test / 255.0
-
-        model = tensorflow.keras.models.Sequential([
-            tensorflow.keras.layers.Flatten(input_shape=(28, 28)),
-            tensorflow.keras.layers.Dense(128, activation='relu'),
-            tensorflow.keras.layers.Dropout(0.2),
-            tensorflow.keras.layers.Dense(10, activation='softmax')
-        ])
-
+        model = tensorflow.keras.models.model_from_json(s.model_json)
         model.compile(optimizer=s.optimizer, loss=s.loss, metrics=s.metrics)
 
-        c = model.fit(x_train, y_train, epochs=5)
+        print model.summary()
 
-        model.save('trained_model.h5')
-
-        print('Model saved!')
+        model.fit(numpy.asarray(x_train), numpy.asarray(y_train), epochs=5)
 
         # end timer
         end = timeit.default_timer()
         print("[Training time]="+ str(end-start))
 
-        return c 
+        return model.get_weights()
 

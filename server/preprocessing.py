@@ -3,16 +3,15 @@ from MLFV_Constraints import MLFVConstraits
 
 class Preprocessing(object):
     constr = MLFVConstraits({
-        "imports": "timeit,numpy,sklearn.preprocessing",
+        # "imports": "timeit,numpy,sklearn.preprocessing",
+        "imports": "timeit",
         "cpu": 1000,
         "mem": 2,
         "net": 10
     })
 
     def __init__(self, par):
-        dataset, scaler = par
-        self.dataset = dataset
-        self.scaler = scaler
+        self.dataset = par[0]
         self.name = 'Preprocessing'
 
     def run(s):
@@ -26,23 +25,13 @@ class Preprocessing(object):
         # start timer
         start = timeit.default_timer()
         print(s.name)
+
+        (x_train, y_train), (x_test, y_test) = s.dataset
+
+        x_train, x_test = x_train / 255.0, x_test / 255.0
         
-        df = numpy.array(s.dataset) 
-        x = df[:,1:]
-        y = df[:,0]
-
-        if s.scaler == 'Standard':
-            sc = sklearn.preprocessing.StandardScaler()
-        elif s.scaler == 'MinMax':
-            sc = sklearn.preprocessing.MinMaxScaler()
-
-        x_scaled = sc.fit_transform(x)
-        x_norm = x_scaled
-
-        new_df = numpy.column_stack((y,x_norm))
-
         # end timer
         end = timeit.default_timer()
         print("[Preprocessing time]="+ str(end-start))
 
-        return new_df
+        return (x_train, y_train), (x_test, y_test)
