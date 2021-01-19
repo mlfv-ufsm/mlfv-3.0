@@ -14,7 +14,7 @@ def send_function(con, obj):
 
 def exec_chain_function(c, p, ret, obj, pp, db):
     exec("import " + obj.split('.')[0])  # import the object
-    print('obj -----> ', obj, pp, c, p)
+    # print('obj -----> ', obj, pp, c, p)
     exec('cc=' + obj + '(' + pp + ')')  # create the object with given parameters
 
     h = get_host(cc, db)
