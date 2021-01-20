@@ -9,8 +9,9 @@ class Training(object):
     })
 
     def __init__(self, pars):
-        model_json, optimizer, loss, metrics, prep_data = pars
+        model_json, custom_layers, optimizer, loss, metrics, prep_data = pars
         self.model_json = model_json
+        self.custom_layers = custom_layers
         self.optimizer = optimizer
         self.loss = loss
         self.metrics = metrics
@@ -25,13 +26,25 @@ class Training(object):
                 print(e)
                 return None
 
+        import keras
+
+        print s.custom_objects['SpatialPyramidPooling'].__dict__
+
         # start timer
         start = timeit.default_timer()
         print(s.name)
 
         (x_train, y_train), _ = s.prep_data
+        
+        model = keras.models.model_from_json(
+            s.model_json,
+            custom_objects = (
+                s.custom_objects
+                    if hasattr(s, 'custom_objects')
+                    else {}
+            )
+        )
 
-        model = tensorflow.keras.models.model_from_json(s.model_json)
         model.compile(optimizer=s.optimizer, loss=s.loss, metrics=s.metrics)
 
         print model.summary()

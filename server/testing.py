@@ -10,9 +10,10 @@ class Testing(object):
     })
 
     def __init__(self, pars):
-        classifier, model_json, optimizer, loss, metrics, prep_data = pars
+        classifier, model_json, custom_layers, optimizer, loss, metrics, prep_data = pars
         self.classifier = classifier
         self.model_json = model_json
+        self.custom_layers = custom_layers
         self.optimizer = optimizer
         self.loss = loss
         self.metrics = metrics
@@ -37,7 +38,7 @@ class Testing(object):
 
         weights = pickle.loads(zl.decompress(b64.b64decode(s.classifier)))
 
-        model = model_from_json(s.model_json)
+        model = model_from_json(s.model_json, s.custom_objects)
         model.set_weights(weights)
 
         model.compile(optimizer=s.optimizer, loss=s.loss, metrics=s.metrics)
