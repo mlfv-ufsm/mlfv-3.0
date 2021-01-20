@@ -42,7 +42,7 @@ def send_chain(c,p):
     start = timeit.default_timer()
 
     rpyc.core.protocol.DEFAULT_CONFIG['allow_pickle'] = True
-    rpyc.core.protocol.DEFAULT_CONFIG['sync_request_timeout'] = None
+    rpyc.core.protocol.DEFAULT_CONFIG['sync_request_timeout'] = 30000
     
     con = rpyc.connect(MLFV_SERVER_HOST, MLFV_SERVER_PORT, config = rpyc.core.protocol.DEFAULT_CONFIG)
 
