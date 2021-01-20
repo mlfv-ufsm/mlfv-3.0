@@ -40,6 +40,7 @@ class ReceiveClient(rpyc.Service):
 
 if __name__ == "__main__":
     rpyc.core.protocol.DEFAULT_CONFIG['allow_pickle'] = True
+    rpyc.core.protocol.DEFAULT_CONFIG['sync_request_timeout'] = None
 
     db = create_db()
 
