@@ -31,7 +31,8 @@ def signal_handler(sig, frame):
 if __name__ == "__main__":
     if len(sys.argv) != 8:
         print("Usage: python "+sys.argv[0]+" <server> <port> <dependencies> <libraries_to_be_shared> <memory_capacity> <cpu_count> <network_speed> <gpu_prio (default=0)>")
-        print("    eg.: python "+sys.argv[0]+" localhost 15089 \"numpy,pandas,sklearn\" \"os,sys,timeit,numpy,pandas,sklearn.ensemble,sklearn.preprocessing,sklearn.metrics\" 256000000 2 100")
+        print("    [Tensorflow] eg.: python "+sys.argv[0]+" localhost 15089 \"numpy,pandas,tensorflow\" \"os,sys,timeit,numpy,pandas,tensorflow\" 256000000 2 100")
+        print("    [Scikit Learn] eg.: python "+sys.argv[0]+" localhost 15089 \"numpy,pandas,sklearn\" \"os,sys,timeit,numpy,pandas,sklearn.ensemble,sklearn.preprocessing,sklearn.metrics\" 256000000 2 100")
         # we opted for allowing these parameters manually for allowing the user to define how much processing capacity will be offered (and also to ease testing) 
         exit()
 
