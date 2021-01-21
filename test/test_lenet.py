@@ -5,6 +5,7 @@ import multiprocessing
 import numpy as np
 import pandas as pd
 import keras.backend as K
+import keras
 from keras.models import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import AveragePooling2D, MaxPooling2D
@@ -88,16 +89,17 @@ def get_chain():
   p['model_json'] = model.to_json()
   p['dataset'] = dataset
 
-  p['optimizer'] = 'sgd' # SGD(lr=0.001)
+  p['batch_size'] = 28
+  p['epochs'] = 2
+
+  p['optimizer'] = { 'type': 'SGD', 'lr': 0.001 } # SGD(lr=0.001)
   p['loss'] = 'categorical_crossentropy'
   p['metrics'] = ['accuracy']
-  
-  p['custom_layers'] = ['SpatialPyramidPooling']
 
   #generating the functions 
   s0 = "prep_data = preprocessing.Preprocessing(dataset)"
-  s1 = "cla = training.Training(model_json, custom_layers, optimizer, loss, metrics, prep_data)"
-  s2 = "pred = testing.Testing(cla, model_json, custom_layers,optimizer, loss, metrics, prep_data)"
+  s1 = "cla = training.Training(model_json, optimizer, loss, metrics, batch_size, epochs, prep_data)"
+  s2 = "pred = testing.Testing(cla, model_json, optimizer, loss, metrics, batch_size, prep_data)"
 
   # print 'dataset ----> ', dataset
   # print 'p -------> ', p

@@ -9,12 +9,13 @@ class Training(object):
     })
 
     def __init__(self, pars):
-        model_json, custom_layers, optimizer, loss, metrics, prep_data = pars
+        model_json, optimizer, loss, metrics, batch_size, epochs, prep_data = pars
         self.model_json = model_json
-        self.custom_layers = custom_layers
         self.optimizer = optimizer
         self.loss = loss
         self.metrics = metrics
+        self.batch_size = batch_size
+        self.epochs = epochs
         self.prep_data = prep_data
         self.name = 'Training'
     
@@ -28,8 +29,6 @@ class Training(object):
 
 
         import keras
-
-        
         from keras.engine.topology import Layer
         import keras.backend as K
 
@@ -158,11 +157,19 @@ class Training(object):
             custom_objects = { 'SpatialPyramidPooling': SpatialPyramidPooling }
         )
 
-        model.compile(optimizer=s.optimizer, loss=s.loss, metrics=s.metrics)
+        optimizer = eval('keras.optimizers.' + s.optimizer['type'])(s.optimizer['lr'])
+
+        model.compile(optimizer=optimizer, loss=s.loss, metrics=s.metrics)
 
         print model.summary()
 
-        model.fit(numpy.asarray(x_train), numpy.asarray(y_train), epochs=5)
+        model.fit(
+            numpy.asarray(x_train),
+            numpy.asarray(y_train),
+            batch_size=s.batch_size,
+            epochs=s.epochs,
+            verbose=1
+        )
 
         # end timer
         end = timeit.default_timer()
