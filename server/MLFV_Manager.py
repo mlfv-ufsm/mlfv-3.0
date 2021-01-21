@@ -7,13 +7,6 @@ from MLFV_DB import decrease_runs
 
 
 def send_function(con, obj):
-    # add custom layers in the class
-    if hasattr(obj, 'custom_layers'):
-        obj.custom_objects = {}
-        for layer in obj.custom_layers:
-            exec('from ' + layer + ' import ' + layer)
-            obj.custom_objects[layer] = eval(layer)
-
     run = rpyc.utils.classic.teleport_function(con, obj.run)(obj)
     con.close
     return run
