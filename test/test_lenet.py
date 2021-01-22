@@ -101,10 +101,6 @@ def get_chain():
   s1 = "cla = training.Training(model_json, optimizer, loss, metrics, batch_size, epochs, prep_data)"
   s2 = "pred = testing.Testing(cla, model_json, optimizer, loss, metrics, batch_size, prep_data)"
 
-  # print 'dataset ----> ', dataset
-  # print 'p -------> ', p
-  # print 'optimizer ----> ', vars(p['optimizer'])
-
   #composing and returning the chain
   return (s0, s1, s2), p
 
