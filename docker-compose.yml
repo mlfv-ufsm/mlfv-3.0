@@ -30,7 +30,7 @@ services:
       sid:
         ipv4_address: 172.20.0.9
     working_dir: '/mlfv'
-    container_name: 'client-cpu 1'
+    container_name: 'client-cpu_1'
     command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "256000000", "2", "100"]
     depends_on:
       - module
