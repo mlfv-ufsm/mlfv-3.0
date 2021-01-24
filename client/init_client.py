@@ -29,7 +29,7 @@ def signal_handler(sig, frame):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 8:
+    if len(sys.argv) < 8:
         print("Usage: python "+sys.argv[0]+" <server> <port> <dependencies> <libraries_to_be_shared> <memory_capacity> <cpu_count> <network_speed> <gpu_prio (default=0)>")
         print("    [Tensorflow] eg.: python "+sys.argv[0]+" localhost 15089 \"numpy,pandas,tensorflow\" \"os,sys,timeit,numpy,pandas,tensorflow\" 256000000 2 100")
         print("    [Scikit Learn] eg.: python "+sys.argv[0]+" localhost 15089 \"numpy,pandas,sklearn\" \"os,sys,timeit,numpy,pandas,sklearn.ensemble,sklearn.preprocessing,sklearn.metrics\" 256000000 2 100")
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     cpu = sys.argv[5]
     mem = sys.argv[6]
     net = sys.argv[7]
-    gpu = sys.argv[8] if len(sys.argv) > 8 else 0
+    gpu = { 'device': sys.argv[8], 'is_enabled': True } if len(sys.argv) > 8 else { 'is_enabled': False }
 
     install(dependencies)
 

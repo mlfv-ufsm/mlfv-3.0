@@ -6,7 +6,8 @@ class Testing(object):
         "imports": "timeit,numpy,tensorflow",
         "cpu": 1000,
         "mem": 2,
-        "net": 10
+        "net": 10,
+        "gpu": True
     })
 
     def __init__(self, pars):

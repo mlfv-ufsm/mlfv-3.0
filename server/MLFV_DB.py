@@ -55,16 +55,26 @@ def get_less_busy(db, hl):
         'mem': r['mem'],
         'net': r['net'],
         'gpu': r['gpu'],
-        'runs':less_runs
+        'runs': less_runs
     } 
     return new_host
 
 
-def get_hosts_cpu_mem(db, cpu, mem):
+def get_hosts_cpu_mem_gpu(db, cpu, mem, gpu):
     ret = []
     for h in db.keys():
-        if int(db[h]['cpu']) >= int(cpu) and int(db[h]['mem']) >= int(mem): # filter cpu and memory constraints
-            ret.append( (h[0], h[1], db[h]['libs'], db[h]['cpu'], db[h]['mem'], db[h]['net'], db[h]['runs']) )
+        # filter cpu and memory constraints
+        if gpu and db[h]['gpu']['is_enabled'] and int(db[h]['cpu']) >= int(cpu) and int(db[h]['mem']) >= int(mem):
+            ret.append((
+                h[0],
+                h[1],
+                db[h]['libs'],
+                db[h]['cpu'],
+                db[h]['mem'],
+                db[h]['net'],
+                db[h]['runs'],
+                db[h]['gpu']
+            ))
     if ret == []:
         print("Error: no compatible host found (mem or cpu constraints)!")
     return ret

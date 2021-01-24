@@ -6,7 +6,8 @@ class Selection(object):
         "imports": "numpy,timeit",
         "cpu": 1000,
         "mem": 1,
-        "net": 10
+        "net": 10,
+        "gpu": False
     })
     
     def __init__(self,par): 

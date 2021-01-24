@@ -7,7 +7,8 @@ class Preprocessing(object):
         "imports": "timeit",
         "cpu": 1000,
         "mem": 2,
-        "net": 10
+        "net": 10,
+        "gpu": False
     })
 
     def __init__(self, par):

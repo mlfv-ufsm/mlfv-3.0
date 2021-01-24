@@ -32,6 +32,11 @@ class ReceiveClient(rpyc.Service):
             'net': info[5],
             'gpu': info[6]
         })
+
+        print('database is now like this ----> ')
+        for h in db:
+            print(db[h])
+
         print("Host " + str(info[0]) + ":" + str(info[1]) + " subscribed")
     def exposed_unsubscribe(self, info):
         remove_reg(db, {'ip': info[0], 'port': info[1]})

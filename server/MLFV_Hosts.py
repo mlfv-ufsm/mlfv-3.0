@@ -24,7 +24,7 @@ def get_compatible_hosts(c, db):
     hr = []
 
     # filter cpu and memory constraits using the provided values
-    hosts = get_hosts_cpu_mem(db, c.constr.cpu, c.constr.mem)
+    hosts = get_hosts_cpu_mem_gpu(db, c.constr.cpu, c.constr.mem, c.constr.gpu)
 
     if openstack: # get values from openstack gnocchi plugin
         for i in hosts: # filters again cpu and memory using 'online' values

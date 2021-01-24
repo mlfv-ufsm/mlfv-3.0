@@ -21,9 +21,10 @@ services:
     working_dir: '/mlfv'
     command: ["python", "MLFV_Module.py"]
   client-cpu:
+    image: mlfv-30_client-cpu:latest
     build:
       context: .
-      dockerfile: Dockerfile.gpu
+      dockerfile: Dockerfile.client.tensorflow
     volumes:
       - ./client:/mlfv
     networks:
@@ -32,5 +33,20 @@ services:
     working_dir: '/mlfv'
     container_name: 'client-cpu_1'
     command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "256000000", "2", "100"]
+    depends_on:
+      - module
+  client-gpu:
+    image: mlfv-30_client-gpu:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.client.tensorflow.gpu
+    volumes:
+      - ./client:/mlfv
+    networks:
+      sid:
+        ipv4_address: 172.20.0.10
+    working_dir: '/mlfv'
+    container_name: 'client-gpu_1'
+    command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "256000000", "2", "100", "0"]
     depends_on:
       - module
