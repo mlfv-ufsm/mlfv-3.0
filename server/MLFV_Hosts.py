@@ -1,4 +1,4 @@
-from MLFV_DB import get_less_busy, get_hosts_cpu_mem
+from MLFV_DB import get_less_busy, get_hosts_cpu_mem_gpu
 
 openstack=False
 
