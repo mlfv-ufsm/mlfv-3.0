@@ -4,7 +4,7 @@ class MLFVConstraits:
     cpu=0
     mem=0
     net=0
-    gpu=0
+    gpu={ 'is_enabled': False }
 
     def __init__(self, dict):
         self.imports = self.check_key(dict, 'imports', '')

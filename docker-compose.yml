@@ -1,4 +1,4 @@
-version: "3.0"
+version: "2.3"
 networks:
   sid:
     ipam:
@@ -47,6 +47,9 @@ services:
         ipv4_address: 172.20.0.10
     working_dir: '/mlfv'
     container_name: 'client-gpu_1'
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
     command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "256000000", "2", "100", "0"]
     depends_on:
       - module
