@@ -1,4 +1,4 @@
-version: "2.3"
+version: "3.8"
 networks:
   sid:
     ipam:
@@ -25,6 +25,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client.tensorflow
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 20M
     volumes:
       - ./client:/mlfv
     networks:
@@ -40,6 +48,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client.tensorflow.gpu
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 20M
     volumes:
       - ./client:/mlfv
     networks:
