@@ -29,7 +29,7 @@ services:
       resources:
         limits:
           cpus: '2'
-          memory: 256M
+          memory: 3G
     volumes:
       - ./client:/mlfv
     networks:
@@ -37,7 +37,7 @@ services:
         ipv4_address: 172.20.0.9
     working_dir: '/mlfv'
     container_name: 'client-cpu_1'
-    command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "256000000", "2", "100"]
+    command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "3000000000", "2", "100"]
     depends_on:
       - module
   client-gpu:
@@ -49,7 +49,7 @@ services:
       resources:
         limits:
           cpus: '2'
-          memory: 256M
+          memory: 3G
     volumes:
       - ./client:/mlfv
     networks:
@@ -60,6 +60,6 @@ services:
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=0
-    command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "256000000", "2", "100", "0"]
+    command: ["python2", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "3000000000", "2", "100", "0"]
     depends_on:
       - module
