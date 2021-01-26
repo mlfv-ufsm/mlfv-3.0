@@ -65,7 +65,7 @@ def get_hosts_cpu_mem_gpu(db, cpu, mem, gpu):
     for h in db.keys():
         # filter cpu and memory constraints
         if int(db[h]['mem']) >= int(mem):
-            if gpu and db[h]['gpu']['is_enabled']:
+            if gpu and db[h]['gpu'] != None:
                 ret.append((
                     h[0],
                     h[1],

@@ -16,8 +16,7 @@ from keras.optimizers import SGD
 from keras.utils.np_utils import to_categorical
 from SpatialPyramidPooling import SpatialPyramidPooling
 
-# MLFV_SERVER_HOST="172.20.0.8"
-MLFV_SERVER_HOST="127.0.0.1"
+MLFV_SERVER_HOST="172.20.0.8"
 MLFV_SERVER_PORT=15088
 
 
