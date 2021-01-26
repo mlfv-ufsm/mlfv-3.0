@@ -4,8 +4,8 @@ from MLFV_Constraints import MLFVConstraits
 class Testing(object):        
     constr = MLFVConstraits({
         "imports": "timeit,numpy,tensorflow",
-        "cpu": 1000,
-        "mem": 2,
+        "cpu": 1,
+        "mem": 2000000,
         "net": 10,
         "gpu": True
     })

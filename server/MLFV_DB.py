@@ -64,17 +64,29 @@ def get_hosts_cpu_mem_gpu(db, cpu, mem, gpu):
     ret = []
     for h in db.keys():
         # filter cpu and memory constraints
-        if int(db[h]['cpu']) >= int(cpu) and int(db[h]['mem']) >= int(mem):
-            ret.append((
-                h[0],
-                h[1],
-                db[h]['libs'],
-                db[h]['cpu'],
-                db[h]['mem'],
-                db[h]['net'],
-                db[h]['gpu'],
-                db[h]['runs']
-            ))
+        if int(db[h]['mem']) >= int(mem):
+            if gpu and db[h]['gpu']['is_enabled']:
+                ret.append((
+                    h[0],
+                    h[1],
+                    db[h]['libs'],
+                    db[h]['cpu'],
+                    db[h]['mem'],
+                    db[h]['net'],
+                    db[h]['gpu'],
+                    db[h]['runs']
+                ))
+            elif int(db[h]['cpu']) >= int(cpu):
+                ret.append((
+                    h[0],
+                    h[1],
+                    db[h]['libs'],
+                    db[h]['cpu'],
+                    db[h]['mem'],
+                    db[h]['net'],
+                    db[h]['gpu'],
+                    db[h]['runs']
+                ))
     if ret == []:
         print("Error: no compatible host found (mem or cpu constraints)!")
     return ret

@@ -5,8 +5,8 @@ class Preprocessing(object):
     constr = MLFVConstraits({
         # "imports": "timeit,numpy,sklearn.preprocessing",
         "imports": "timeit",
-        "cpu": 1000,
-        "mem": 2,
+        "cpu": 1,
+        "mem": 2000000,
         "net": 10,
         "gpu": False
     })
