@@ -45,5 +45,7 @@ def get_compatible_hosts(c, db):
         if len(set(l).intersection(libs)) == len(l):
             hr.append((h,p))
 
+    print 'sending to ---> ', hr
+
     return hr
 

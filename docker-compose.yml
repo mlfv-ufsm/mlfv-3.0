@@ -44,7 +44,7 @@ services:
     image: mlfv-30_client-gpu:latest
     build:
       context: .
-      dockerfile: Dockerfile.client.tensorflow.gpu
+      dockerfile: Dockerfile.client.tensorflow
     deploy:
       resources:
         limits:
@@ -60,6 +60,6 @@ services:
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=0
-    command: ["python2", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "3000000000", "2", "100", "0"]
+    command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "3000000000", "2", "100", "0"]
     depends_on:
       - module

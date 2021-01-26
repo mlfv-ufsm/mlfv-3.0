@@ -87,8 +87,14 @@ def get_hosts_cpu_mem_gpu(db, cpu, mem, gpu):
                     db[h]['gpu'],
                     db[h]['runs']
                 ))
+
     if ret == []:
-        print("Error: no compatible host found (mem or cpu constraints)!")
+        print("Error: no compatible host found (mem or cpu/gpu constraints)!")
+
+    # sorting by gpu key [-2]
+    if gpu:
+        ret.sort(reverse=True, key=lambda x: x[-2])
+
     return ret
 
 
