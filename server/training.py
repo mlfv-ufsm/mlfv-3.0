@@ -32,6 +32,8 @@ class Training(object):
         import keras
         from keras.engine.topology import Layer
         import keras.backend as K
+        import keras.backend.tensorflow_backend as tb
+        tb._SYMBOLIC_SCOPE.value = True
 
         class SpatialPyramidPooling(Layer):
             """Spatial pyramid pooling layer for 2D inputs.
@@ -138,11 +140,7 @@ class Training(object):
                 if self.dim_ordering == 'channels_first':
                     outputs = K.concatenate(outputs)
                 elif self.dim_ordering == 'channels_last':
-                    #outputs = K.concatenate(outputs,axis = 1)
                     outputs = K.concatenate(outputs)
-                    #outputs = K.reshape(outputs,(len(self.pool_list),self.num_outputs_per_channel,input_shape[0],input_shape[1]))
-                    #outputs = K.permute_dimensions(outputs,(3,1,0,2))
-                    #outputs = K.reshape(outputs,(input_shape[0], self.num_outputs_per_channel * self.nb_channels))
 
                 return outputs
 
