@@ -47,6 +47,11 @@ services:
       dockerfile: Dockerfile.client.tensorflow
     deploy:
       resources:
+        reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
         limits:
           cpus: '2'
           memory: 3G
@@ -57,9 +62,21 @@ services:
         ipv4_address: 172.20.0.10
     working_dir: '/mlfv'
     container_name: 'client-gpu_1'
-    runtime: nvidia
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=0
     command: ["python", "init_client.py", "172.20.0.8", "15089", "numpy,pandas,tensorflow", "os,sys,timeit,numpy,pandas,tensorflow", "3000000000", "2", "100", "0"]
     depends_on:
       - module
+  client-test:
+    image: mlfv-30_client-test:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./test:/mlfv
+    networks:
+      sid:
+        ipv4_address: 172.20.0.11
+    working_dir: '/mlfv'
+    container_name: 'client-test'
+    command: ["python", "test_lenet.py"]
+    depends_on:
+      - client-cpu
